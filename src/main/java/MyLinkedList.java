@@ -89,8 +89,8 @@ public class MyLinkedList<E> implements MyList<E> {
             }
         } else {
             if (currentNode != null && currentNode.getData().equals(e)) {
-                    clear();
-                    elementRemoved = true;
+                clear();
+                elementRemoved = true;
             }
         }
         return elementRemoved;
@@ -103,6 +103,13 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public boolean contains(Object o) {
+        LinkedNode<E> currentNode = linkedNode;
+        while (null != currentNode) {
+            if (currentNode.getData().equals(o)) {
+                return true;
+            }
+            currentNode = currentNode.getNext();
+        }
         return false;
     }
 

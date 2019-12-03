@@ -184,4 +184,21 @@ public class TestMyLinkedList {
         myLinkedList.set(0, 10);
         assertEquals(10, myLinkedList.get(0));
     }
+
+    @Test
+    public final void testContainsKnownObject(){
+        MyLinkedList myLinkedList = new MyLinkedList<>();
+        myLinkedList.add(1);
+        myLinkedList.add(2);
+        assertEquals(true,myLinkedList.contains(2));
+    }
+
+    @Test
+    public final void testDoesntContainsObject(){
+        MyLinkedList myLinkedList = new MyLinkedList<>();
+        myLinkedList.add(1);
+        myLinkedList.add(2);
+        assertEquals(false,myLinkedList.contains("test"));
+        assertEquals(false,myLinkedList.contains(10));
+    }
 }
