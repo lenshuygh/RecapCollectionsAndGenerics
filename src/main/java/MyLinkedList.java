@@ -1,53 +1,53 @@
 import java.util.Objects;
 
-public class MyLinkedList<E> implements MyList {
+public class MyLinkedList<E> implements MyList<E> {
     private LinkedNode<E> linkedNode;
 
     @Override
-    public void add(int i, Object o) {
-        if (size() >= i && inputTypeMatchesNodeType(o)) {
+    public void add(int i, E e) {
+        if (size() >= i) {
             if (i == 0) {
-                LinkedNode originalNode = linkedNode;
-                linkedNode = new LinkedNode<>((E) o, originalNode);
+                LinkedNode<E> originalNode = linkedNode;
+                linkedNode = new LinkedNode<>(e, originalNode);
                 return;
             }
             int indexCount = 0;
-            LinkedNode currentNode = linkedNode;
-            LinkedNode previousNode = null;
+            LinkedNode<E> currentNode = linkedNode;
+            LinkedNode<E> previousNode = null;
             while (indexCount != i) {
                 previousNode = currentNode;
-                currentNode = currentNode.next;
+                currentNode = currentNode.getNext();
                 indexCount++;
             }
-            previousNode.next = new LinkedNode((E) o, currentNode);
+            previousNode.setNext(new LinkedNode<>(e, currentNode));
         }
     }
 
     @Override
-    public void set(int i, Object o) {
-        if (size() >= i && inputTypeMatchesNodeType(o)) {
-            int indexCount = 0;
-            LinkedNode currentNode = linkedNode;
-            while (indexCount != i) {
-                currentNode = currentNode.next;
-                indexCount++;
-            }
-            currentNode.data = (E) o;
-        }
-    }
-
-    @Override
-    public Object get(int i) {
+    public void set(int i, E e) {
         if (size() >= i) {
             int indexCount = 0;
-            LinkedNode currentNode = linkedNode;
+            LinkedNode<E> currentNode = linkedNode;
+            while (indexCount != i) {
+                currentNode = currentNode.getNext();
+                indexCount++;
+            }
+            currentNode.setData(e);
+        }
+    }
+
+    @Override
+    public E get(int i) {
+        if (size() >= i) {
+            int indexCount = 0;
+            LinkedNode<E> currentNode = linkedNode;
             while (indexCount < size()) {
                 if (indexCount == i) {
-                    return currentNode.data;
+                    return currentNode.getData();
                 } else {
                     indexCount++;
-                    if (null != currentNode.next) {
-                        currentNode = currentNode.next;
+                    if (null != currentNode.getNext()) {
+                        currentNode = currentNode.getNext();
                     }
                 }
             }
@@ -56,50 +56,41 @@ public class MyLinkedList<E> implements MyList {
     }
 
     @Override
-    public boolean add(Object o) {
+    public boolean add(E e) {
         if (null == linkedNode) {
-            linkedNode = new LinkedNode<>((E) o, null);
-            return true;
-        }
-        if (inputTypeMatchesNodeType(o)) {
-            LinkedNode currentNode = linkedNode;
-            while (currentNode.next != null) {
-                currentNode = currentNode.next;
-            }
-            currentNode.next = new LinkedNode<>((E) o, null);
-            return true;
+            linkedNode = new LinkedNode<>(e, null);
         } else {
-            return false;
+            LinkedNode<E> currentNode = linkedNode;
+            while (currentNode.getNext() != null) {
+                currentNode = currentNode.getNext();
+            }
+            currentNode.setNext(new LinkedNode<>(e, null));
         }
+        return true;
     }
 
     @Override
-    public boolean remove(Object o) {
-        if (!inputTypeMatchesNodeType(o)) {
-            return false;
-        }
-        LinkedNode currentNode = linkedNode;
-        LinkedNode previousNode = null;
+    public boolean remove(E e) {
+        LinkedNode<E> currentNode = linkedNode;
+        LinkedNode<E> previousNode = null;
         boolean elementRemoved = false;
         if (size() > 1) {
-            while (null != currentNode && null != currentNode.next) {
-                if (currentNode.data.equals((E) o)) {
+            while (null != currentNode && null != currentNode.getNext()) {
+                if (currentNode.getData().equals(e)) {
                     if (null != previousNode) {
-                        previousNode.next = currentNode.next;
+                        previousNode.setNext(currentNode.getNext());
                         elementRemoved = true;
                     } else {
                         clear();
                     }
                 }
                 previousNode = currentNode;
-                currentNode = currentNode.next;
+                currentNode = currentNode.getNext();
             }
         } else {
-            if (currentNode != null) {
-                if (currentNode.data.equals(o)) {
+            if (currentNode != null && currentNode.getData().equals(e)) {
                     clear();
                     elementRemoved = true;
-                }
             }
         }
         return elementRemoved;
@@ -120,13 +111,9 @@ public class MyLinkedList<E> implements MyList {
         int size = 0;
         LinkedNode currentNode = linkedNode;
         while (null != currentNode) {
-            currentNode = currentNode.next;
+            currentNode = currentNode.getNext();
             size++;
         }
         return size;
-    }
-
-    private boolean inputTypeMatchesNodeType(Object o) {
-        return o.getClass().equals(linkedNode.data.getClass());
     }
 }

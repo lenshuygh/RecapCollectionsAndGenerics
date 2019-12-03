@@ -1,6 +1,6 @@
 public class LinkedNode<E> {
-    E data;
-    LinkedNode<E> next;
+    private E data;
+    private LinkedNode<E> next;
 
     public LinkedNode() {
     }
