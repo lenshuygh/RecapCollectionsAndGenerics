@@ -229,4 +229,26 @@ public class TestMyLinkedList {
 
         assertThrows(IndexOutOfBoundsException.class,() -> myLinkedList.get(10));
     }
+
+    @Test
+    public final void canAddElementAtPositionZeroToEmptyList(){
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
+
+        myLinkedList.add(0,10);
+        final int listSize = myLinkedList.size();
+
+        assertEquals(1,listSize);
+    }
+
+    @Test
+    public final void canRemoveFirstElement(){
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
+        myLinkedList.add(1);
+        myLinkedList.add(2);
+
+        myLinkedList.remove(1);
+        final int listSize = myLinkedList.size();
+
+        assertEquals(1,listSize);
+    }
 }

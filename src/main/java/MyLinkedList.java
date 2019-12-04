@@ -3,23 +3,27 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void add(int i, E e) {
-        if (i >= size() || i < 0) {
-            throw new IndexOutOfBoundsException(String.format("asked insertion position = %n, size of collection = %n.", i, size()));
-        } else {
-            if (i == 0) {
-                LinkedNode<E> originalNode = linkedNode;
-                linkedNode = new LinkedNode<>(e, originalNode);
-                return;
+        if (i == 0 && null == linkedNode) {
+            linkedNode = new LinkedNode<>(e, null);
+        }else {
+            if (i >= size() || i < 0) {
+                throw new IndexOutOfBoundsException(String.format("asked insertion position = %n, size of collection = %n.", i, size()));
+            } else {
+                if (i == 0) {
+                    LinkedNode<E> originalNode = linkedNode;
+                    linkedNode = new LinkedNode<>(e, originalNode);
+                    return;
+                }
+                int indexCount = 0;
+                LinkedNode<E> currentNode = linkedNode;
+                LinkedNode<E> previousNode = null;
+                while (indexCount != i) {
+                    previousNode = currentNode;
+                    currentNode = currentNode.getNext();
+                    indexCount++;
+                }
+                previousNode.setNext(new LinkedNode<>(e, currentNode));
             }
-            int indexCount = 0;
-            LinkedNode<E> currentNode = linkedNode;
-            LinkedNode<E> previousNode = null;
-            while (indexCount != i) {
-                previousNode = currentNode;
-                currentNode = currentNode.getNext();
-                indexCount++;
-            }
-            previousNode.setNext(new LinkedNode<>(e, currentNode));
         }
     }
 
@@ -85,10 +89,11 @@ public class MyLinkedList<E> implements MyList<E> {
                 if (currentNode.getData().equals(e)) {
                     if (null != previousNode) {
                         previousNode.setNext(currentNode.getNext());
-                        elementRemoved = true;
                     } else {
-                        clear();
+                        currentNode.setData(currentNode.getNext().getData());
+                        currentNode.setNext(currentNode.getNext().getNext());
                     }
+                    elementRemoved = true;
                 }
                 previousNode = currentNode;
                 currentNode = currentNode.getNext();
