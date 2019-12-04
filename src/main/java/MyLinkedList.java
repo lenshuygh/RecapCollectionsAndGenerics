@@ -1,11 +1,11 @@
-public class MyLinkedList<E> implements MyList<E> {
+public class MyLinkedList<E> implements MyList<E>, MyQueue<E> {
     private LinkedNode<E> linkedNode;
 
     @Override
     public void add(int i, E e) {
         if (i == 0 && null == linkedNode) {
             linkedNode = new LinkedNode<>(e, null);
-        }else {
+        } else {
             if (i >= size() || i < 0) {
                 throw new IndexOutOfBoundsException(String.format("asked insertion position = %n, size of collection = %n.", i, size()));
             } else {
@@ -133,5 +133,20 @@ public class MyLinkedList<E> implements MyList<E> {
             size++;
         }
         return size;
+    }
+
+
+    @Override
+    public E peek() {
+        if(null == linkedNode){
+            return null;
+        }else{
+            return linkedNode.getData();
+        }
+    }
+
+    @Override
+    public E remove() {
+        return null;
     }
 }

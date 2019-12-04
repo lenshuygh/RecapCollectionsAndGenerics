@@ -2,7 +2,7 @@ public class LinkedNode<E> {
     private E data;
     private LinkedNode<E> next;
 
-    public LinkedNode() {
+    public LinkedNode(){
     }
 
     public LinkedNode(E data, LinkedNode<E> next) {
