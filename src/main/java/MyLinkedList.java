@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class MyLinkedList<E> implements MyList<E> {
     private LinkedNode<E> linkedNode;
 
