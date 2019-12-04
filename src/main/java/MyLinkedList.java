@@ -3,7 +3,9 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void add(int i, E e) {
-        if (size() >= i) {
+        if (i >= size()) {
+            throw new IndexOutOfBoundsException(String.format("asked insertion position = %n, size of collection = %n.", i, size()));
+        } else {
             if (i == 0) {
                 LinkedNode<E> originalNode = linkedNode;
                 linkedNode = new LinkedNode<>(e, originalNode);
@@ -23,7 +25,9 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void set(int i, E e) {
-        if (size() >= i) {
+        if (i >= size()) {
+            throw new IndexOutOfBoundsException(String.format("asked insertion position = %n, size of collection = %n.", i, size()));
+        } else {
             int indexCount = 0;
             LinkedNode<E> currentNode = linkedNode;
             while (indexCount != i) {
@@ -36,21 +40,25 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public E get(int i) {
-        if (size() >= i) {
-            int indexCount = 0;
-            LinkedNode<E> currentNode = linkedNode;
-            while (indexCount < size()) {
-                if (indexCount == i) {
-                    return currentNode.getData();
-                } else {
-                    indexCount++;
-                    if (null != currentNode.getNext()) {
-                        currentNode = currentNode.getNext();
+        if (i >= size()) {
+            throw new IndexOutOfBoundsException(String.format("asked for element at position = %n, size of collection = %n.", i, size()));
+        } else {
+            if (size() >= i) {
+                int indexCount = 0;
+                LinkedNode<E> currentNode = linkedNode;
+                while (indexCount < size()) {
+                    if (indexCount == i) {
+                        return currentNode.getData();
+                    } else {
+                        indexCount++;
+                        if (null != currentNode.getNext()) {
+                            currentNode = currentNode.getNext();
+                        }
                     }
                 }
             }
+            return null;
         }
-        return null;
     }
 
     @Override

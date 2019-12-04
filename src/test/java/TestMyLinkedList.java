@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestMyLinkedList {
     @Test
@@ -89,20 +88,7 @@ public class TestMyLinkedList {
     public final void cannotGetFromEmptyList() {
         MyLinkedList<String> myLinkedList = new MyLinkedList<>();
 
-        final String getElementResult = myLinkedList.get(1);
-
-        assertEquals(null, getElementResult);
-    }
-
-    @Test
-    public final void cannotGetHigherIndexThanElementsInList() {
-        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
-        myLinkedList.add(5);
-        myLinkedList.add(10);
-
-        final Integer receivedElement = myLinkedList.get(10);
-
-        assertEquals(null, receivedElement);
+        assertThrows(IndexOutOfBoundsException.class, () -> myLinkedList.get(1));
     }
 
     @Test
@@ -172,19 +158,6 @@ public class TestMyLinkedList {
     }
 
     @Test
-    public final void cannotAddAtTooLargePosition() {
-        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
-        myLinkedList.add(1);
-        myLinkedList.add(2);
-        myLinkedList.add(3);
-        myLinkedList.add(4);
-
-        myLinkedList.add(5, 0);
-
-        assertEquals(4, myLinkedList.size());
-    }
-
-    @Test
     public final void canSetData() {
         MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
         myLinkedList.add(1);
@@ -228,5 +201,32 @@ public class TestMyLinkedList {
 
         assertEquals(false, listContainsStringObject);
         assertEquals(false, listContainsIntObject);
+    }
+
+    @Test
+    public final void testAddWithTooLargeIndexThrowsIndexOutOfBoundsException(){
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
+        myLinkedList.add(1);
+        myLinkedList.add(2);
+
+        assertThrows(IndexOutOfBoundsException.class,() -> myLinkedList.add(10,10));
+    }
+
+    @Test
+    public final void testSetWithTooLargeIndexThrowsIndexOutOfBoundException(){
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
+        myLinkedList.add(1);
+        myLinkedList.add(2);
+
+        assertThrows(IndexOutOfBoundsException.class,() -> myLinkedList.set(10,10));
+    }
+
+    @Test
+    public final void testGetWithTooLargeIndexThrowsIndexOutOfBoundException(){
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
+        myLinkedList.add(1);
+        myLinkedList.add(2);
+
+        assertThrows(IndexOutOfBoundsException.class,() -> myLinkedList.get(10));
     }
 }
