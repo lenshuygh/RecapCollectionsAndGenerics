@@ -3,7 +3,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void add(int i, E e) {
-        if (i >= size()) {
+        if (i >= size() || i < 0) {
             throw new IndexOutOfBoundsException(String.format("asked insertion position = %n, size of collection = %n.", i, size()));
         } else {
             if (i == 0) {
@@ -25,7 +25,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void set(int i, E e) {
-        if (i >= size()) {
+        if (i >= size() || i < 0) {
             throw new IndexOutOfBoundsException(String.format("asked insertion position = %n, size of collection = %n.", i, size()));
         } else {
             int indexCount = 0;
@@ -40,7 +40,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public E get(int i) {
-        if (i >= size()) {
+        if (i >= size() || i < 0) {
             throw new IndexOutOfBoundsException(String.format("asked for element at position = %n, size of collection = %n.", i, size()));
         } else {
             if (size() >= i) {
