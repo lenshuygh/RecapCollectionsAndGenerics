@@ -147,6 +147,12 @@ public class MyLinkedList<E> implements MyList<E>, MyQueue<E> {
 
     @Override
     public E remove() {
-        return null;
+        if(null == linkedNode){
+            return null;
+        }else{
+            E data = linkedNode.getData();
+            remove(data);
+            return data;
+        }
     }
 }
